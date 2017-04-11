@@ -1,0 +1,417 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package mymoney;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+
+/**
+ *
+ * @author 小圈子
+ */
+public class Update extends javax.swing.JFrame {
+
+    /**
+     * Creates new form Update
+     */
+    Statement st;
+    Connection con;
+
+    public Update() {
+        initComponents();
+        init();
+        initializeDB();
+    }
+
+    public JTextField[] returnJTF() {
+        JTextField[] jtf = new JTextField[6];
+        jtf[0] = jf1;
+        jtf[1] = jf2;
+        jtf[2] = jf3;
+        jtf[3] = jf4;
+        jtf[4] = jf5;
+        jtf[5] = jf6;
+        return jtf;
+    }
+
+    public JComboBox[] returnJBOX() {
+        JComboBox[] jbox = new JComboBox[3];
+        jbox[0] = jbox1;
+        jbox[1] = jbox2;
+        jbox[2] = jbox3;
+        return jbox;
+    }
+    public void init() {
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                int isTrue = JOptionPane.showConfirmDialog(null, "确定退出？", "退出", JOptionPane.YES_NO_OPTION);
+                if (isTrue == JOptionPane.YES_NO_OPTION) {
+                    System.exit(0);
+                }
+                
+            }
+        });
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent we) {
+                dispose();
+            }
+        });
+        jb2.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int isTrue = JOptionPane.showConfirmDialog(null, "确定返回？", "退出", JOptionPane.YES_NO_OPTION);
+                if (isTrue == JOptionPane.YES_NO_OPTION) {
+
+                    setVisible(false);
+                }
+            }
+        });
+        jb1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    String s1 = (String) jbox1.getSelectedItem();
+                    String s2 = (String) jbox2.getSelectedItem();
+                    String s3 = (String) jbox3.getSelectedItem();
+                    String s4 = s1 + "-" + s2 + "-" + s3;
+                    String s5 = jf1.getText();
+                    String s6 = jf2.getText();
+                    String s7 = jf3.getText();
+                    String s8 = jf4.getText();
+                    String s9 = jf5.getText();
+                    String s0 = jf6.getText();
+                    String str = "update MyMoney set date='" + s4 + "' ,type='" + s5 + "' , project='" + s6 + "' , inMoney='" + s7 + "' , outMoney='" + s8 + "' , sumMoney='" + s9 + "' where incomeID='" + s0 + "';";
+                    st.executeUpdate(str);
+                    JOptionPane.showMessageDialog(null, "修改成功");
+                    setVisible(false);
+
+                } catch (SQLException ex) {
+                    Logger.getLogger(Update.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            }
+        });
+        jb2.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int isTrue = JOptionPane.showConfirmDialog(null, "确定返回？", "退出", JOptionPane.YES_NO_OPTION);
+                if (isTrue == JOptionPane.YES_NO_OPTION) {
+                   
+                    setVisible(false);
+                }
+            }
+        });
+    }
+
+     public void setDay(JComboBox year,JComboBox month,JComboBox day){
+        int y=Integer.parseInt(year.getSelectedItem().toString());
+        int m=Integer.parseInt(month.getSelectedItem().toString());
+        Calendar c=Calendar.getInstance();
+        c.set(Calendar.YEAR,y);c.set(Calendar.MONTH,m-1);
+        int days=c.getActualMaximum(Calendar.DAY_OF_MONTH);
+        day.setModel(new DefaultComboBoxModel(getModel(1, days)));
+    }
+    public String[] getModel(int start, int end) {
+		String[] m = new String[end - start + 1];
+		for (int i = 0; i < m.length; i++) {
+			m[i] = String.valueOf(i + start);
+		}
+		return m;
+	}
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jf1 = new javax.swing.JTextField();
+        jf2 = new javax.swing.JTextField();
+        jf3 = new javax.swing.JTextField();
+        jf4 = new javax.swing.JTextField();
+        jf5 = new javax.swing.JTextField();
+        jbox1 = new javax.swing.JComboBox<>();
+        jbox2 = new javax.swing.JComboBox<>();
+        jbox3 = new javax.swing.JComboBox<>();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jb1 = new javax.swing.JButton();
+        jb2 = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        jf6 = new javax.swing.JTextField();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jLabel1.setText("日    期：");
+
+        jLabel2.setText("收支类型：");
+
+        jLabel3.setText("收支项目：");
+
+        jLabel4.setText("收入金额：");
+
+        jLabel5.setText("支出金额：");
+
+        jLabel6.setText("总计数目：");
+
+        jbox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2010", "2011", "2012", "2013", "2014", "2015", "2016" }));
+        jbox1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jbox1ItemStateChanged(evt);
+            }
+        });
+        jbox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbox1ActionPerformed(evt);
+            }
+        });
+
+        jbox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" }));
+        jbox2.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jbox2ItemStateChanged(evt);
+            }
+        });
+
+        jbox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
+
+        jLabel7.setText("选择年份：");
+
+        jLabel8.setText("选择月份：");
+
+        jLabel9.setText("选择日份：");
+
+        jb1.setText("确认修改");
+
+        jb2.setText("返回上一级");
+
+        jLabel10.setText("收支编号：");
+
+        jf6.setEditable(false);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jf3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel3)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(jf2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jLabel6))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel1)
+                                                .addGap(220, 220, 220))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                    .addGroup(layout.createSequentialGroup()
+                                                        .addComponent(jLabel10)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                        .addComponent(jf6))
+                                                    .addGroup(layout.createSequentialGroup()
+                                                        .addComponent(jLabel2)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                        .addComponent(jf1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jLabel5)))
+                                        .addGap(18, 18, 18))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGap(64, 64, 64)
+                                        .addComponent(jbox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel8)
+                                        .addGap(79, 79, 79))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jb1)
+                                        .addGap(97, 97, 97)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jf4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jf5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel9)
+                                    .addComponent(jb2))))
+                        .addContainerGap(115, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(163, 163, 163)
+                        .addComponent(jbox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
+                        .addComponent(jbox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(99, 99, 99))))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel9))
+                .addGap(14, 14, 14)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(jf6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jf1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5)
+                    .addComponent(jf4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jf2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6)
+                    .addComponent(jf5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jf3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jb2)
+                    .addComponent(jb1))
+                .addGap(58, 58, 58))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void jbox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbox1ActionPerformed
+
+    private void jbox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jbox1ItemStateChanged
+        // TODO add your handling code here:
+        setDay(jbox1,jbox2,jbox3);
+    }//GEN-LAST:event_jbox1ItemStateChanged
+
+    private void jbox2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jbox2ItemStateChanged
+        // TODO add your handling code here:
+        setDay(jbox1,jbox2,jbox3);
+    }//GEN-LAST:event_jbox2ItemStateChanged
+
+    public void initializeDB() {
+        String url = "jdbc:sqlserver://localhost:1433; DatabaseName=MyMoney";
+        String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+        String user = "sa";
+        String pwd = "zq7108392";
+        try {
+            Class.forName(driver);//加载驱动
+            System.out.println("驱动加载成功");
+        } catch (ClassNotFoundException event) {
+            System.out.print("无法创建驱动程式实体!");
+        }
+        try {
+            con = DriverManager.getConnection(url, user, pwd);
+            System.out.println("引入数据库成功");
+            st = con.createStatement();
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Update.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Update.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Update.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Update.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Update().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JButton jb1;
+    private javax.swing.JButton jb2;
+    private javax.swing.JComboBox<String> jbox1;
+    private javax.swing.JComboBox<String> jbox2;
+    private javax.swing.JComboBox<String> jbox3;
+    private javax.swing.JTextField jf1;
+    private javax.swing.JTextField jf2;
+    private javax.swing.JTextField jf3;
+    private javax.swing.JTextField jf4;
+    private javax.swing.JTextField jf5;
+    private javax.swing.JTextField jf6;
+    // End of variables declaration//GEN-END:variables
+}
